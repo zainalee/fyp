@@ -1,0 +1,103 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+{% load tags %}
+{% comment %} <div class="container pt-4">
+  <div class="row">
+    <div class="col-lg-4">
+      <form class="form form-check-inline" method='get'>
+        {{ filter.form.as_p }}
+        <button class="btn btn-success btn-md" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</div> {% endcomment %}
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-sm-10 ">
+            <h3 class="pt-4 ml-4">My Purchases</h3>
+                <table class="table tabel-sm table-hover">
+                    <tr>
+                        <th>Number</th>
+                        <th>Order Id</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        {% comment %} <th>Number</th> {% endcomment %}
+                        <th>Date Ordered</th>
+                        <th>Status by Seller</th>
+                        <th>Have You Recieved?</th>
+                        <th>Action</th>
+                        {% comment %} <th></th> {% endcomment %}
+                        
+                    </tr>
+                    {% for orderitems in detail %}
+                    <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td> {{orderitems.order.id}} </td>
+                    <td><img width="50px" height="50px" src="{{orderitems.product.image.url}}"></td> 
+                    <td style="text-transform: capitalize">{{orderitems.product.title}}</td> 
+                    <td>{{orderitems.price |multiply:orderitems.quantity}}</td>
+                    <td>{{orderitems.quantity}}</td>
+                    <td> {{orderitems.date_orderd}} </td>
+
+                    {% if orderitems.status == 'Pending' %}
+                        <td><h5><i class="badge badge-warning">{{orderitems.status}}</i></h5></td>
+                    {% elif orderitems.status == 'Delivered' %}
+                        <td><h5><i class="badge badge-info">{{orderitems.status}}</i></h5></td>
+                    {% endif %}
+
+                    {% if orderitems.statusforbuyer == 'Not-Received'%}
+                        <td><h5><i class="badge badge-secondary">{{orderitems.statusforbuyer}}</i></h5></td>
+                    {% elif orderitems.statusforbuyer == 'Received'%}
+                        <td><h5><i class="badge badge-success">{{orderitems.statusforbuyer}}</i></h5></td>
+                    {% endif %}
+                    
+                    {% if orderitems.status == 'Delivered'%}
+                        {% if orderitems.statusforbuyer == 'Not-Received' %}
+                        <td><h5><a class="badge btn btn-sm badge-primary" href="{% url 'updateorderforbuyer' orderitems.id %}">Update Order Status</a><h5></td>
+                        {% endif %}
+                    {% endif %}
+                    {% if orderitems.status == 'Delivered'%}
+                        {% if orderitems.statusforbuyer == 'Received' %}
+                            {% if orderitems.feedback_status == non%}
+                                <td><h5><a style="background-color:#f21aa5" class="badge badge-primary btn text-white" href="{% url 'feedback' orderitems.id %}">Give Feedback</a></h5></td>
+                            {% else %}
+                                <td><h5><a class="badge badge-success text-white" >Feedback Done</a></h5></td>
+                            {% endif %}
+
+                        {% endif %}
+                    {% endif %}
+                    
+
+                    
+                    
+
+                    {% comment %} {% if orderitems.order.status == 'Pending' %}
+                        <td><i class="badge badge-info">Pending</i></td>
+                    {% elif orderitems.order.status == 'Delivered'%}
+                                        <td><i class="badge badge-success">Deliverd</i></td>                    
+                    {% endif %}
+                    {% if orderitems.order.statusforbuyer == none %}
+                        <td><i class="badge badge-warning">Not Recieved</i></td>
+                    {% else %}
+                        <td><i class="badge text-white" style="background-color:#f21aa5">{{orderitems.order.statusforbuyer}}</i></td>
+                    {% endif %}
+                    {% if orderitems.feedback_status == '1' %}
+                            <td><i class="badge badge-success">Feedback Done</td>
+                        {% elif orderitems.feedback_status == none and orderitems.order.statusforbuyer != none %}
+                            <td><a class="badge badge-primary btn text-white" href="{% url 'feedback' orderitems.id %}">Give Feedback</a></td>
+                        {% endif %}
+                            {% if orderitems.order.statusforbuyer == 'Not Received' and orderitems.order.status == 'Delivered' %}
+                                <td><a class="badge btn btn-sm badge-primary" href="{% url 'updateorderforbuyer' orderitems.order.id %}">Update Order Status</a></td>
+                            {% endif %} {% endcomment %}
+                        
+                    </tr>
+                    {% endfor %}
+                    </li>
+                </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

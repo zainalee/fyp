@@ -1,0 +1,15 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+    <div class="container mt-2 p-3">
+        <div class="row offset-2">
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="submit" class="btn btn-md btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

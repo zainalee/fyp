@@ -1,0 +1,320 @@
+{% extends "gui/layout.html" %}
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+     <div class="container mt-3">
+        <div class="row" >
+            <div class="col-sm-3 col-md-3 col-lg-3 p-4 border-top border-left border-bottom " style="background-color:white">
+                <div>
+                    <img class="rounded mx-auto d-block img-responsive justify-content-center" width="300px" height="300px" src="{{product_detail.image.url}}">
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 p-4 border-right border-top border-bottom" style="background-color:white">
+                <h3 class="m-0 p-0" style="text-transform:capitalize">{{product_detail.title}}</h3>
+                <hr class="rounded"> 
+                <p style="font-size: 15px;"><b>Product Description : </b> {{product_detail.description}} <br>
+                <span>  Product by ( {{product_detail.user}} ) <b><a href="{% url 'mystore' product_detail.user.id%}">visit store</a></b></span></p>
+               
+                <p>Product Price :
+                   <b class="">
+                    {% if product_detail.deal_status == 1%}
+              <span class=""><small><del>{{product_detail.price}}</del></small> - <ins>{{product_detail.deal_price}}</ins> Rs <i class="badge badge-sm badge-success ml-1">Discount</i></span>
+              {% else %}
+              <span class="">{{product_detail.price}} Rs</span>
+              {% endif%}
+        
+                    </b></p>
+                {% if product_detail.average_rating %}
+                    <h6>Average Rating : 
+                        <span> <i  style="color:orange" class="fa fa-star mr-1"> </i><b>{{product_detail.average_rating | floatformat}}</b></span>
+                    </h6>
+                {% endif %}
+                <hr class="rounded"> 
+                <a href="{% url 'cart' %}"style="text-decoration: none;"><button style="text-decoration:none;"  class="btn btn-md btn-primary update-cart" data-product={{product_detail.id}} data-action="add" data-minorder="{{product_detail.minorder}}"><b>ADD TO CART</b></button></a>
+            
+            </div>
+            <div class="col-sm-3 col-lg-3 col-md-3 p-4 text-center border" style="background-color:#eff0f5">
+                <p >Other Details</p>
+                <hr class="rounded">
+                <i class="fas fa-shipping-fast"></i>
+                <span class="text-center m-0 p-0" style="font-size: 14px;font-style:Helvetica Neue">Delivery {{product_detail.delivery_days}}-{{product_detail.max_delivery_days}} Days</span><br>
+                <i class="fas fa-money mt-2"></i>
+                <span class="text-center" style="font-size: 14px;font-style:Helvetica Neue">Cash On Delivery</span>
+                
+            </div>
+        </div>
+       
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 mt-2 p-4 offset-1 border-right border-left border-top" style="">
+            <h4>Best Selling Products</h4>
+
+            {% for product in suggestion %}
+            {% if product.average_rating == 5 %}
+            <div
+        class="card card-cascade card-ecommerce m-0 p-0 mt-2"
+        style="width: 230px"
+      >
+        <div class="view view-cascade overlay">
+          <img
+            class="card-img-top img-responsive mx-auto d-block text-center"
+            style="height: 120px; width: 120px"
+            src="{{product.image.url}}"
+            alt=""
+          />
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <div class="card-body card-body-cascade text-center">
+          <h6 class="card-title m-0 p-0" style="text-transform: capitalize;text-decoration:none">
+            <strong
+              ><a style="color:black" class="text-black"href="{% url 'detailview' product.id %}"
+                >{{product.title}}</h6
+              ></strong
+            >
+          </h5>
+          <small>{{product.category}}</small><br />
+          {% if product.average_rating %}
+          <span style="color: orange">{{product.average_rating | floatformat}}</span>
+          <span style="color: orange" class="fa fa-star checked m-0 p-0"></span>
+          {% elif product.average_rating == true %}
+          <small>Not rated Yet</small>
+          {% endif%}
+
+         
+      
+          
+          <div class="card-footer text-center">
+            <span class="">{{product.price}} Rs</span> <br /><span class=""
+              ><small
+                >Min order
+                <i class="badge badge-primary">{{product.minorder}}</i></small
+              ></span
+            >
+            {% if request.user.is_authenticated %}
+            <span class="float-right"
+              ><a
+                style="color:black"
+                class=""
+                href="{% url 'add_to_wishlist' product.id %}"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Add to Wishlist"
+                ><i class="fas fa-heart"></i></a
+            ></span>
+            {% else %}
+            <span class="float-right"
+              ><a
+                class=""
+                href="{% url 'login' %}"
+                onclick="wishlist_alert()"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Add to Wishlist"
+                ><i class="fas fa-heart"></i></a
+            ></span>
+            {% endif %}
+          </div>
+          {% if request.user.is_authenticated %}
+          <button
+            class="btn btn-success btn-sm add-btn update-cart mt-2"
+            data-product="{{product.id}}"
+            data-minorder="{{product.minorder}}"
+            onClick="window.location.reload();"
+            data-action="add"
+          >
+            Add to cart
+          </button>
+          {% else %}
+          <a
+            onclick="showAlert()"
+            id="login-alert"
+            class="btn btn-success"
+            style="text-decoration: none !important; cursor: pointer"
+            href="{% url 'login'%}"
+            >Add to cart</a
+          >
+          {% endif %}
+        </div>
+      </div>
+            {% endif %}
+            {% endfor %}
+
+            {% for product in suggestion2 %}
+            {% if product.average_rating == 5 %}
+            <div
+        class="card card-cascade card-ecommerce m-0 p-0 mt-2"
+        style="width: 230px"
+      >
+        <div class="view view-cascade overlay">
+          <img
+            class="card-img-top img-responsive mx-auto d-block text-center"
+            style="height: 120px; width: 120px"
+            src="{{product.image.url}}"
+            alt=""
+          />
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <div class="card-body card-body-cascade text-center">
+          <h6 class="card-title m-0 p-0" style="text-transform: capitalize;text-decoration:none">
+            <strong
+              ><a style="color:black" class="text-black"href="{% url 'detailview' product.id %}"
+                >{{product.title}}</h6
+              ></strong
+            >
+          </h5>
+          <small>{{product.category}}</small><br />
+          {% if product.average_rating %}
+          <span style="color: orange">{{product.average_rating | floatformat}}</span>
+          <span style="color: orange" class="fa fa-star checked m-0 p-0"></span>
+          {% elif product.average_rating == true %}
+          <small>Not rated Yet</small>
+          {% endif%}
+
+         
+      
+          
+          <div class="card-footer text-center">
+            <span class="">{{product.price}} Rs</span> <br /><span class=""
+              ><small
+                >Min order
+                <i class="badge badge-primary">{{product.minorder}}</i></small
+              ></span
+            >
+            {% if request.user.is_authenticated %}
+            <span class="float-right"
+              ><a
+                style="color:black"
+                class=""
+                href="{% url 'add_to_wishlist' product.id %}"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Add to Wishlist"
+                ><i class="fas fa-heart"></i></a
+            ></span>
+            {% else %}
+            <span class="float-right"
+              ><a
+                class=""
+                href="{% url 'login' %}"
+                onclick="wishlist_alert()"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Add to Wishlist"
+                ><i class="fas fa-heart"></i></a
+            ></span>
+            {% endif %}
+          </div>
+          {% if request.user.is_authenticated %}
+          <button
+            class="btn btn-success btn-sm add-btn update-cart mt-2"
+            data-product="{{product.id}}"
+            data-minorder="{{product.minorder}}"
+            onClick="window.location.reload();"
+            data-action="add"
+          >
+            Add to cart
+          </button>
+          {% else %}
+          <a
+            onclick="showAlert()"
+            id="login-alert"
+            class="btn btn-success"
+            style="text-decoration: none !important; cursor: pointer"
+            href="{% url 'login'%}"
+            >Add to cart</a
+          >
+          {% endif %}
+        </div>
+      </div>
+            {% endif%}
+            {% endfor %}
+     {% comment %} {% endif %} {% endcomment %}
+
+        </div>
+    
+        <div class="col-sm-6 p-4 offset-1">
+        {% if latest_review_list %}
+            <h4>Reviews</h4>
+        <table class="table table-hover">
+                        <tbody>                                    
+                                {% for review in latest_review_list%}
+                            <tr>
+                                <td>
+                                   <span class="float-left font-weight-bold">{{review.user_name}}</span> <br><span>{{review.comment}}</span><br>
+                                   <div class="float-right">
+                                   {% if review.rating == 5 %}
+                                    <span style="color: orange;" class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    {% endif%}
+                                    {% if review.rating == 4 %}
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span class="fa fa-star "></span>
+                                    {% endif%}
+                                    {% if review.rating == 3 %}
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    {% endif%}
+                                    {% if review.rating == 2 %}
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    {% endif%}
+                                    {% if review.rating == 1 %}
+                                    <span style="color: orange;"class="fa fa-star checked"></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star "></span>
+                                    {% endif%}
+                                    </div><br>
+                                   <span class="float-right">{{review.pub_date}}</span>
+                                </td>
+                            </tr>
+                                {% endfor %}
+                            
+                        </tbody> 
+                    </table>
+            {% else %}
+            <h4>No Reviews yet</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row offset-5">
+   
+    {% comment %} {% else %}
+    <p>No reviews are available.</p> {% endcomment %}
+{% comment %} {% endif %} {% endcomment %}
+</div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+        $("button").click(function(){
+            $("form").toggle();
+         });
+        });
+    </script> 
+{% endblock %}
+{% comment %} {% block custom_js %}
+
+{% endblock custom_js%} {% endcomment %}

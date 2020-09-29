@@ -1,0 +1,15 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+{% load tags %}
+    <div class="container">
+        <div class="row justify-content-end pt-4">
+            <div class="col-lg-9">
+                    <h3>Users List</h3>
+                    {% for users in user %}
+                        <li>{{users.username}}</li>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

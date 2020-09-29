@@ -1,0 +1,95 @@
+{% extends "gui/layout.html" %}
+{% block content %}
+    <br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card " style="background-color: #4cb4c7;">
+                    <div class="card-header text-white text-center">
+                        <h3 class="card-title">Total Orders</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center">3</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card " style="background-color: #7abecc;">
+                    <div class="card-header text-white text-center">
+                        <h3 class="card-title">Orders Deliverd</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center">1</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card " style="background-color: #7cd1c0;">
+                    <div class="card-header text-white text-center">
+                        <h3 class="card-title"> Orders Pending</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center">2</h2>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+    {% comment %} 
+        <div class="col-sm-6">
+            <br>
+            <div class="card card-body">
+                <a class="btn btn-primary btn-sm btn-block" href="">Customers</a>
+                <table class="table tabel-sm">
+                    <tr>
+                        <th></th>
+                        <th>Customers</th>
+                        <th>Orders</th>
+                    </tr>
+                </table>
+            </div>
+        </div> {% endcomment %}
+        <div class="row p-0 block text-center">
+         <div class="col-sm-12 ">
+            <br>
+            <div class="card card-body">
+                <a class="btn btn-primary btn-lg" href="">Orders</a>
+                <table class="table tabel-lg text-center">
+                    <tr>
+                        
+                        <th><b>Customer</b></th>
+                        <th><b>Order</b></th>
+                        <th><b>Status</b></th>
+                    </tr>
+                    <tr>
+                        <td>Zain</td>
+                        <td>Sugar</td>
+                        <td class="badge badge-warning">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Ahmer</td>
+                        <td>Oil</td>
+                        <td class="badge badge-success">Deliverd</td>
+                    </tr>
+                    <tr>
+                        <td>Rabia</td>
+                        <td>Sugar</td>
+                        <td class="badge badge-warning">Pending</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div>
+    
+        {% comment %} <div>
+            <h1>Total Products {{product}}</h2>
+        </div> {% endcomment %}
+        </div>
+        
+{% endblock  %}

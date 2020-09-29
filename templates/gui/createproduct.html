@@ -1,0 +1,67 @@
+{% extends "gui/layout.html" %}
+{% comment %} {% load widget_tweaks %} {% endcomment %}
+
+
+{% load crispy_forms_tags %}
+{% block content%}
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" method="POST", action="{% url 'createproduct' %}" enctype="multipart/form-data">
+{% csrf_token %}
+<fieldset>
+
+<!-- Form Name -->
+<legend class="text-center">CREATE NEW PRODUCT</legend>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="product_name"></label>  
+  <div class="col-md-4">
+  <p>
+  {% comment %} <input id="product_name"  name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text"> {% endcomment %}
+    {{form|crispy}}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+        {{message}}
+        </div>
+      {%endfor%}
+    {% endif %}
+    </p>
+  </div>
+</div>
+<div class="form-group">
+  <div class="row justify-content-center offset-4">
+  <div class="col-md-4  text-center">
+    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary" style="width:200px">Upload</button>
+  </div>
+  </div>
+  </div>
+
+</fieldset>
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <form method='POST' action="">
+{% csrf_token %}
+{{form}}
+<input type="submit" value="Upload">
+
+</form>
+
+{% endblock%} {% endcomment %}

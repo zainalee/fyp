@@ -1,0 +1,44 @@
+{% extends "gui/layout.html" %}
+{% block content %}
+<br>
+    <div class="container-fluid">
+    <div class="row p-0">
+        <div class="col-sm-12">
+            <h1 class="text-center">Your Products</h1>
+            <br>
+            {% if products %}
+            <div class="card card-body">
+                <a class="btn btn-primary btn-sm btn-block" href="{% url 'createproduct' %}">Post Product</a>
+                <table class="table tabel-sm">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    
+                        {% for i in products %}
+                            <tr>
+                                <td><img width="80px" height="80px" src="{{i.image.url}}"></td>
+                                <td style="text-decoration:none;">{{i.title}}</td>
+                                <td>{{i.category}}</td>
+                                <td>{{i.price}}</td>
+                                <td>{{i.quantity}}</td>
+                                <td><a href="{% url 'updateproduct' i.id %}"><button class="btn btn-sm btn-info">Update</button></a></td>
+                                <td><a href="{% url 'deleteproduct' i.id %}"><button class="btn btn-sm btn-danger">Delete</button></a></td>
+                            </tr>
+                        {%endfor%}
+                    {%endif%}
+                    {% if not products %}
+                    <h3 class="text-center">You Dont Have any product Yet</h3>
+                    <h6 class="text-center"><a href="{% url 'createproduct' %}" class="btn btn-primary">Post Your First Product </a></h6>
+                    {% endif%}
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock  %}

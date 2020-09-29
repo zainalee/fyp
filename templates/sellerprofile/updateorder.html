@@ -1,0 +1,54 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+{% load crispy_forms_tags %}
+{% load tags %}
+
+<div class="container">
+    <div class="row offset-2 pt-4 ">
+        <div class="col-lg-4">
+            <h3>Update Order Status</h3>
+        </div>
+    </div>
+
+    <div class="row offset-2 ">
+        <div class="col-sm-8">
+            <form class="form-horizontal bg-light p-4"  method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="submit" class="btn btn-success btn-md" Value="Update">
+            </form>
+        </div>
+    </div>
+<div class="container">
+    <div class="row offset-2">
+        <div class="col-sm-8">
+        <h4 class="mt-4 ml-2">Item Details</h4>
+            <div class="p-4 bg-light mt-4">
+                Order# {{orderdetails.id}} <span class="float-right">Date Order : {{orderdetails.date_orderd}}</span><br>
+                <div class="mt-2">
+                    <img width="40px" height="40px" src="{{orderitem.product.image.url}}"><span class="ml-4">{{orderitem.product.title}} </span><span class="ml-4"> Qty = {{orderitem.quantity}} </span> <span class="ml-4 float-right"> Total Price = {{orderitem.price |multiply:orderitem.quantity}} </span>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+    <div class="row offset-2">
+        <div class="col-sm-8">
+        <h4 class="mt-4 ml-2">Shipping Address Details</h4>
+            <div class="p-4 bg-light mt-4">
+                 
+                <p class="p-0 m-0">Street Address <span class="float-right">{{orderdetails.address}}</span></p> <br>
+                <p class="p-0 m-0">State <span class="float-right">{{orderdetails.state}}</span></p><br>
+                <p class="p-0 m-0">City <span class="float-right">{{orderdetails.city}}</span></p><br>
+                <p class="p-0 m-0">zipcode <span class="float-right">{{orderdetails.zipcode}}</span></p><br>
+                <p class="p-0 m-0">Ph No <span class="float-right">{{orderdetails.ph_number}}</span></p><br>
+                <p class="p-0 m-0">Email Address <span class="float-right">{{orderdetails.user.email}}</span></p><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+{% endblock %}

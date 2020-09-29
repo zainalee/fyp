@@ -1,0 +1,91 @@
+{% extends "sellerprofile/layout.html" %}
+{% load bootstrap3 %}
+{% load crispy_forms_tags %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+{% comment %} <style>
+    .star-rating {
+  line-height:32px;
+  font-size:1.25em;
+  cursor: pointer;
+}
+</style> {% endcomment %}
+        <div class="container mt-4 pt-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+
+
+                <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-12 mb-0">
+        {{ form.comment|as_crispy_field }}
+        {{ form.rating|as_crispy_field }}
+      </div>                                        
+        <div class="form-group">
+            {% comment %} <div class="input-rating"name="rating">
+                <strong class="text-uppercase"name="rating">Your Rating: </strong>
+                    <div class="rating-select" name="rating">
+
+                        <div class="btn btn-default btn-sm" name="rating" value="5"><span class="fa fa-star"name="rating" value="5"></span></div>
+                        <div class="btn btn-default btn-sm" name="rating" value="4"><span class="fa fa-star"name="rating" value="4"></span></div>
+                        <div class="btn btn-default btn-sm" name="rating" value="3"><span class="fa fa-star"name="rating" value="3"></span></div>
+                        <div class="btn btn-default btn-sm" name="rating" value="2"><span class="fa fa-star"name="rating" value="2"></span></div>
+                        <div class="btn btn-default btn-sm" name="rating" value="1"><span class="fa fa-star"name="rating" value="1"></span></div>
+                    </div>
+            </div> {% endcomment %}
+            <button class="btn btn-primary mt-4" type="submit">Submit</button>
+        </div>
+        {% comment %} {% if user.id is not None %}
+            
+        {% else %}
+            You must be logged in to post a review
+        {% endif %} {% endcomment %}
+    </form>
+
+
+
+
+
+                    {% comment %} <p class="p-0 m-0">Select Stars</p>
+                    <form action="" method="post" class="form" id="form" style="">
+                        {% csrf_token %}
+                        {% bootstrap_form form layout='inline' %}
+                        {% buttons %}
+                        <button type="submit" class="btn btn-primary">{% bootstrap_icon "star" %} Add </button>
+                        {% endbuttons %}
+                    </form> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <script>
+ $(function(){
+    $('.rating-select .btn').on('mouseover', function(){
+        $(this).removeClass('btn-default').addClass('btn-warning');
+        $(this).prevAll().removeClass('btn-default').addClass('btn-warning');
+        $(this).nextAll().removeClass('btn-warning').addClass('btn-default');
+    });
+
+    $('.rating-select').on('mouseleave', function(){
+        active = $(this).parent().find('.selected');
+        if(active.length) {
+            active.removeClass('btn-default').addClass('btn-warning');
+            active.prevAll().removeClass('btn-default').addClass('btn-warning');
+            active.nextAll().removeClass('btn-warning').addClass('btn-default');
+        } else {
+            $(this).find('.btn').removeClass('btn-warning').addClass('btn-default');
+        }
+    });
+
+    $('.rating-select .btn').click(function(){
+        if($(this).hasClass('selected')) {
+            $('.rating-select .selected').removeClass('selected');
+        } else {
+            $('.rating-select .selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+});
+        </script>
+        {% endblock %}

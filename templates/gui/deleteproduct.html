@@ -1,0 +1,14 @@
+{% extends "gui/layout.html" %}
+{% comment %} {% load widget_tweaks %} {% endcomment %}
+
+
+
+{% block content%}
+    <p>Are you sure you want to delet product {{product}}</p>
+    <form method="POST" action="{% url 'deleteproduct' product.id %}">
+        {% csrf_token %}
+        <a href="{% url 'products' %}">No</a>
+
+        <input type="submit" value="Delete">
+    </form>
+{% endblock%}

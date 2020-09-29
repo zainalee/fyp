@@ -1,0 +1,71 @@
+{% extends "gui/layout.html" %}
+{% load bootstrap3 %}
+{% load crispy_forms_tags %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+    <div class="container mt-5 p-5">
+        <div class="row">
+            <div class="col-md-3">
+                <h3 style="text-transform: capitalize">{{requests.title}}</h3>
+            </div>
+            <div class="col-md-9">
+                <h6 style="">{{requests.description}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container mt-4 pt-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    {% comment %} <form action="" method="post" class="form" id="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form layout='inline' %}
+                        {% buttons %}
+                        <button type="submit" class="btn btn-primary">{% bootstrap_icon "star"  %} Send </button>
+                        {% endbuttons %}
+                    </form> {% endcomment %}
+{% for message in messages %}
+<div class="container" id="message-container">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-12 mb-0">
+        {{ form.description|as_crispy_field }}
+      </div>
+      <small class="p-0 m-0 mb-2" style="">Description should Must be 20 charecter Long</small>
+       <div class="form-group col-md-12 mb-0">
+       {{ form.price|as_crispy_field }}
+       </div>
+        <div class="form-group col-md-12 mb-0">
+        {{ form.contact_number|as_crispy_field }} 
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+  </form>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        function confirm(){
+            alert("Offer Sent Successfully")
+        }
+         var message_ele = document.getElementById("message-container");
+
+setTimeout(function(){ 
+   message_ele.style.display = "none"; 
+}, 3000);
+    </script>
+{% endblock %}

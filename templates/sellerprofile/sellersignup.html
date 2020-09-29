@@ -1,0 +1,149 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% load static %}
+<style>
+  
+.errorlist {
+    color: red;
+}
+
+</style>
+<div class="hold-transition register-page">
+<div class="register-box" style="">
+  <div class="login-logo mr-4 m-0" >
+    <img class="pt-5 mt-5" src="{% static '/images/logo.png'%}" style="width:150px;height:150px"/>
+  </div>
+
+  <div class="card">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">Register as a Seller</p>
+
+      <form action="" method="POST">
+      {% csrf_token %}
+        {{form.email.errors}}    
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Email" name="email" require="True">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <p style="color: red">{{form.username.errors}}</p> 
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Username" name="username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        {{form.password1.errors}} 
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password1">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        {{form.password2.errors}} 
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Retype password" name="password2">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        {{sellerForm.mobileNo.errors}}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Mobile No" name="mobileNo">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-mobile-alt"></span>
+            </div>
+          </div>
+        </div>
+        {{sellerForm.cnic.errors}}
+        {% comment %} <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Enter Cnic" name="cnic">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-id-card"></span>
+            </div>
+          </div>
+        </div> {% endcomment %}
+        {{sellerForm.city.errors}}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Enter City" name="city">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-city"></span>
+            </div>
+          </div>
+        </div>
+        {{sellerForm.address.errors}}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Enter Street Address" name="address">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-home"></span>
+            </div>
+          </div>
+        </div>
+        {{sellerForm.state.errors}}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Enter State" name="state">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-map"></span>
+            </div>
+          </div>
+        </div>
+        {{sellerForm.shop_name.errors}}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Shop name" name="shop_name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-store"></span>
+            </div>
+          </div>
+        </div>
+        
+        
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+         {% comment %} {% for field in form %}
+        {% for error in field.errors %}
+         <div class="alert alert-danger col-sm-12 mt-2">{{error}}</div>
+        {% endfor %}
+      {% endfor %}
+      {% for field in sellerForm %}
+        {% for error in field.errors %}
+          <div class="alert alert-danger col-sm-12 mt-2">{{error}}</div>
+        {% endfor %}
+      {% endfor %}
+  {% if form.non_field_errors %}
+    <div style="color:red">
+      <p>{{form.non_field_errors}}</p>
+    </div>
+  {% endif %}
+    {% if sellerForm.non_field_errors %}
+    <div style="color:red">
+      <p>{{sellerForm.non_field_errors}}</p>
+    </div>
+  {% endif %} {% endcomment %}
+      </form>
+      <div class="text-center mb-4">
+      <a href="{% url 'login'%}" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+</div>
+{% endblock%}

@@ -1,0 +1,59 @@
+{% load static %}
+{% comment %} {% load staticfiles %} {% endcomment %}
+{% load tags %}
+
+<style>
+.message{
+  margin-right:20px;
+}
+nav.navbar.navbar-expand-lg.navbar-light {
+    height: 80px;
+    border-bottom: 1px solid #e4e5e7;
+    border-top: 1px solid #e4e5e7;
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:white">
+  <a class="navbar-brand " href="#"><img src="{% static '/images/logo.png'%}" style="width:100px;height:100px"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse " id="navbarNav">
+    <ul class="navbar-nav ">
+    {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'adminhome' %}">Dashboard</a>
+      </li>
+      {% endif %}
+        
+      {% comment %} {% if request.user|has_group:"sellers"  %}
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'products' %}">My Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'createproduct' %}">Post New Product</a>
+      </li>
+      {% endif %} {% endcomment %}
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'main' %}">Home</a>
+      </li>
+      {% if request.user|has_group:'sellers'%}
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'requestfeed' %}">Buyer Requests</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'cart' %}"><i class="fa fa-shopping-cart" style=""><span class="badge badge-pill badge-danger">{{orderItems}}</span></i></a>
+      </li>
+    </ul>
+    
+  </div>
+  {% if user.is_authenticated %}
+  <span id="message" class="mr-4 text-success" style="text-transform:capitalize">{{request.user}} </span>
+  {% endif %}
+    {% if user.is_authenticated%}
+    <a class="btn btn-sm z-depth-0" style="text-decoration: none" href="{% url 'logout'%}" >Logout <i class="fa fa-sign-out-alt"></i></a>
+    {% else %}
+    <a style="text-decoration: none" class="btn btn-sm" href="{% url 'login'%}">Login <i class="fa fa-sign-out-alt"></i></a>
+    {% endif%}
+</nav>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% load static %}
+    {% load tags %}
+    {% comment %} {% load has_group %} {% endcomment %}
+  <title>Epak | Whole Salers</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  {% comment %} <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet"> {% endcomment %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+
+<body class="hold-transition sidebar-mini layout-fixed" style="background-color:ffff">
+<div class="wrapper">
+
+  <!-- Navbar -->
+{% if request.user.is_authenticated %}
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </li>
+      
+      {% if user.is_authenticated%}
+      {% comment %} <li class="nav-item d-none d-sm-inline-block float-right">
+        <a href="{% url 'main'%}" class="nav-link ">Switch to Buying</a>
+      </li>
+       <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'logout'%}" class="nav-link btn btn-primary">Log out</a>
+      </li> {% endcomment %}
+      {% endif %}
+      
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#222d32">
+    <!-- Brand Logo -->
+    <a href="/static/index3.html" class="brand-link">
+      {% comment %} <img src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8"> {% endcomment %}
+      <span class="brand-text font-weight-light">E-Pak Wholesalers</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      {% if request.user|has_group:"sellers"  %}
+        <div class="image">
+          <img src="{{request.user.sellerprofile.profile_pic.url}}" class="img-circle" style="width:50px;height:50px" alt="User Image">
+        </div>
+      {% endif %}
+        <div class="info text-center" style="text-transform: capitalize">
+          <a href="{% url 'profile'%}" class="d-block ml-4">{{request.user}}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          
+          
+          {% if request.user.is_superuser %}
+            <li class="nav-item">
+            <a href="{% url 'adminhome'%}" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Analytics
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+            <li class="nav-item">
+            <a href="{% url 'userlist' %}" class="nav-link">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+                Manage Users
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'addcat' %}" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Add New Category
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'categories' %}" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Manage Categories
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'logout'%}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          {% else %}
+
+          {% if request.user|has_group:"sellers"  %}
+          <li class="nav-item">
+            <a href="{% url 'products'%}" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                My Products
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'selling'%}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Sellings
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'createproduct'%}" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Add Product
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="{% url 'myorders'%}" class="nav-link">
+              <i class="nav-icon ion ion-bag"></i>
+              <p>
+                Purchases
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'main'%}" class="nav-link">
+              <i class="nav-icon fas fa-random"></i>
+              <p>
+                Switch to Buying
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+            
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'adminhome'%}" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Analytics
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'wishlist'%}" class="nav-link">
+              <i class="nav-icon fas fa-heart"></i>
+              <p>
+                Wish List
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{% url 'post'%}" class="nav-link">
+              <i class="nav-icon fas fa-upload"></i>
+              <p>
+                Post Custom Request
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'myrequests'%}" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                My Requests
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'requestfeed'%}" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                Buyer Requests
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+
+           {% if request.user|has_group:"sellers"  %}
+              <li class="nav-item">
+            <a href="{% url 'profile_settings'%}" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Setting
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+           {% endif%}
+
+          <li class="nav-item">
+            <a href="{% url 'logout'%}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          {% endif %}
+          
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+{% endif%} 
+
+{% block content %}
+{% endblock %} 
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'%}"></script>
+<!-- Summernote -->
+<script src="{% static 'plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+{% block custom_js %}
+{% endblock custom_js %}
+</body>
+</html>

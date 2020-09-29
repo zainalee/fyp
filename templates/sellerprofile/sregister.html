@@ -1,0 +1,121 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% load static %}
+<style>
+  .error input, .error select {
+border: 2px red solid;
+}
+.errorlist {
+    color: red;
+}
+</style>
+
+
+<div class="hold-transition register-page">
+<div class="register-box">
+  <div class="login-logo m-0 mr-4" >
+    <img class="p-0 m-0" src="{% static '/images/logo.png'%}" style="width:150px;height:150px"/>
+  </div>
+
+  <div class="card">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">Register a new membership</p>
+{{ form.non_field_errors }}
+      <form action="" method="POST">
+      {% csrf_token %}
+        {% comment %} <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="First Name" name="first_name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+            </div>
+            </div>
+            <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Last name" name="last_name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div> 
+          </div>
+        </div> {% endcomment %}
+        {{ form.email.errors }}
+        <div class="input-group mb-3">
+          
+          <input type="email" class="form-control" placeholder="Email" name="email">
+          
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        {% if form.errors%}
+        <p style="color: red">{{ form.username.errors }}</p>
+        {% endif%}
+        <div class="input-group mb-3">
+        
+          <input type="text" class="form-control" placeholder="Username" name="username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        {{ form.password1.errors }}
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password1">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        {{ form.password2.errors }}
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Retype password" name="password2">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+         {% comment %} {% for field in form %} {% endcomment %}
+        {% comment %} <p>
+        <ul>
+        {% for error in form %}
+         <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+      </p> {% endcomment %}
+  {% comment %} {% endfor %} {% endcomment %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger col-sm-12 mt-4">{{form.non_field_errors}}</div>
+  {% endif %}
+      </form>
+    
+      <div class="social-auth-links text-center">
+        {% comment %} <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-primary">
+          <i class="fab fa-facebook mr-2"></i>
+          Sign up using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-danger">
+          <i class="fab fa-google-plus mr-2"></i>
+          Sign up using Google+
+        </a> {% endcomment %}
+      </div>
+
+      <a href="{% url 'login'%}" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+</div>
+{% endblock%}

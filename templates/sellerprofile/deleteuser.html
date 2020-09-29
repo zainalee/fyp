@@ -1,0 +1,22 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+
+{% load tags %}
+<div class="container pt-3">
+    <div class="row justify-content-end">
+        <div class="col-sm-10 ">
+            <h3>Are you sure you want to Delet User {{product}}</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <a href="{% url 'userlist' %}">No</a>
+                <input class="ml-4 btn btn-danger" type="submit" value="Delete" onclick="confirm()">
+            </form>
+           </div>
+        </div>
+    </div>
+    <script>
+        function confirm(){
+            alert("User Deleted Successfully")
+        }
+    </script> 
+{% endblock  %}

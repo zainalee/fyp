@@ -1,0 +1,72 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+{% load crispy_forms_tags %}
+<section class="content">
+      <div class="row justify-content-md-center mt-4">
+     
+        <div class="col-md-6">
+        <div class="alert alert m-2" id="msg" role="alert">
+         {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor%}
+         {% endif %}
+         </div>
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Post Request</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+            <form class="form-horizontal" method="POST" action="{% url 'post' %}">
+            {% csrf_token %}
+            <fieldset>
+
+            <legend class="text-center"></legend>
+            <div class="form-group">
+  <label class="col-md-6 control-label" for="product_name"></label>  
+  <div class="col-md-12">
+  <p>
+  {% comment %} <input id="product_name"  name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text"> {% endcomment %}
+    {{form|crispy}}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+        {{message}}
+        </div>
+      {%endfor%}
+    {% endif %}
+    </p>
+  </div>
+</div>
+<div class="form-group">
+  <div class="row justify-content-center offset-4">
+  <div class="col-md-4  text-center">
+    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary" style="width:200px">Upload</button>
+  </div>
+  </div>
+  </div>
+
+</fieldset>
+</form>
+            
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+    <script>
+        setTimeout(function(){
+            if($('msg').length>0){
+                $('msg').remove();
+            }
+        },2000)
+    </script>
+
+{%endblock%}

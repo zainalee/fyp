@@ -1,0 +1,57 @@
+{% extends "sellerprofile/layout.html" %}
+{% block content %}
+{% include "sellerprofile/navbar.html"%}
+{{uid}}
+<div class="container-fluid mt-4">
+    <div class="row justify-content-end ml-4">
+        <div class="col-sm-10 ml-4 pl-4">
+            <h4>Total Offers <i class="badge badge-pill badge-info">{{total_offers}}</i></h4>
+        </div>
+    </div>
+    <div class="row mt-4">
+        
+            {% for req in myrequest%}
+               <div class="col-sm-2 offset-md-3"> {{req.title}}</div>
+               <div class="col-sm-6"> {{req.description}}</div>
+            {% endfor %}
+        
+    </div>
+</div>
+{% if offers %}
+<div class="container-fluid mt-4">
+    <div class="row justify-content-end ml-4">
+        <div class="col-sm-10 ml-4 pl-4">
+            <h6 class="pt-4">Offers </h6>
+                <table class="table tabel-sm table-responsive">
+                    <tr>
+                        <th style="width:5%">No.</th>
+                        <th style="width:15%" >Phone-Number</th>
+                        <th style="width:60%">Description</th>
+                        <th style="width:10%">Price</th>
+                        <th style="width:10%">By</th>
+                        
+                    </tr >
+                        {% for offer in offers %}
+                            <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{offer.contact_number}}</td>
+                            <td>{{offer.description}}</td>
+                            <td>{{offer.price}}</td>
+                            <td>{{offer.user}}</td>
+                            {% comment %} <td class="text-center"><a href="{% url 'deleterequest' req.id %}"><i class="fa fa-md fa-trash"></i></a><a class="btn btn-info" href="{% url 'view_offers' req.id%}">View Offers</a></td> {% endcomment %}
+                            </tr>
+                        {% endfor%}
+                    </table>
+            </div>
+        </div>
+    </div>    
+    {% else %}
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-end ml-4">
+            <div class="col-sm-10 ml-4 pl-4">
+                <h4>No offer Recieved yet</h4>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock%}
